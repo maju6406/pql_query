@@ -23,7 +23,7 @@ else
   echo "Query results (YAML) can be found here: /tmp/"${yaml_filename}
   echo "Query results (JSON) can be found here: /tmp/"${json_filename}  
   if [ "$PT_store_results" != "no" ]; then
-    urlencoded_output="$(/opt/puppetlabs/puppet/bin/ruby -e "require 'uri'; puts (URI.escape(STDIN.read))" < /tmp/pqlquery_1516727809.json)"
+    urlencoded_output="$(/opt/puppetlabs/puppet/bin/ruby -e "require 'uri'; puts (URI.encode(STDIN.read))" < /tmp/pqlquery_1516727809.json)"
     echo http://jsonlint.com/json?=${urlencoded_output}
   fi
 fi
