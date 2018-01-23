@@ -6,8 +6,9 @@ fi
 echo "query:" ${PT_query}
 echo '---'
 unixtime_string="$(date +%s)"
-/opt/puppetlabs/bin/puppet-query '$PT_query' &>/tmp/query_$unixtime_string
-cat /tmp/query_$unixtime_string
+filename="pqlquery_$unixtime_string.json"
+/opt/puppetlabs/bin/puppet-query '$PT_query' &>/tmp/$filename
+cat /tmp/$filename
 echo
 echo '---'
-echo "Query results can be found here: /tmp/query_"${unixtime_string}
+echo "Query results can be found here: /tmp/"${filename}
