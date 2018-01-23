@@ -40,6 +40,7 @@ bolt task run --nodes, -n <node-name> pql_query::run query=<value>
 
 There is 1 parameter:
 * query : pql query you want to execute  
+
 If something goes wrong, try changing single quotes to double quotes or vice versa.
 
 The results will be shown in YAML in the console.  
@@ -58,4 +59,4 @@ To show help for the task CLI, run `puppet task run --help` or `bolt task run --
 This task can only be targeted to the master node
 
 ## Release Notes/Contributors/Etc.
-0.1.0 - Initial Release
+0.1.0 - Initial Release  
