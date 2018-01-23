@@ -39,12 +39,13 @@ bolt task run --nodes, -n <node-name> pql_query::run query=<value>
 **NOTE** The task can take a few minutes to run.
 
 There is 1 parameter:
-* query : pql query you want to execute  
+* query : pql query you want to execute
+* store_results : Store results on disk. Defaults to 'yes'.
 
 If something goes wrong, try changing single quotes to double quotes or vice versa.
 
 The results will be shown in YAML in the console.  
-The results are saved in /tmp in json and yaml formats. 
+If store_results is set to 'yes' or not set, the results are saved in /tmp in json and yaml formats. 
 ## Reference
 
 To view the available actions and parameters, on the command line, run `puppet task show pql_query` or see the pql_query module page on the [Forge](https://forge.puppet.com/beersy/pql_query/tasks).
@@ -59,4 +60,5 @@ To show help for the task CLI, run `puppet task run --help` or `bolt task run --
 This task can only be targeted to the master node
 
 ## Release Notes/Contributors/Etc.
+0.2.0 - Added new store_results option  
 0.1.0 - Initial Release  

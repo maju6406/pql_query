@@ -6,6 +6,10 @@
         "query": {
             "description": "pql query you want to execute.",
             "type": "String[1]"
+        },
+        "store_results": {
+            "description": "Store results on disk. Defaults to yes.",
+            "type": "Optional[Enum[yes, no]]"
         }
     }
 }
