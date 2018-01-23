@@ -4,7 +4,9 @@
     "author": "Abir Majumdar",
     "summary": "Task that lets you run pql queries in the PE Console",
     "license": "Apache-2.0",
-    "source": "",
+    "source": "https://github.com/maju6406/pql_query",
+    "project_page": "https://github.com/maju6406/pql_query",
+    "issues_url": "https://github.com/maju6406/pql_query/issues",
     "dependencies": [
 
     ],
