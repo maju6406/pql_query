@@ -1,81 +1,61 @@
+[![Build Status](https://travis-ci.org/maju6406/pql_query.svg?branch=master)](https://travis-ci.org/maju6406/pql_query)
 
 # pql_query
-
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
-
-
-
-
-
-
 
 #### Table of Contents
 
 1. [Description](#description)
-2. [Setup - The basics of getting started with pql_query](#setup)
-    * [What pql_query affects](#what-pql_query-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with pql_query](#beginning-with-pql_query)
+2. [Requirements](#requirements)
 3. [Usage - Configuration options and additional functionality](#usage)
 4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+5. [Getting help - Some Helpful commands](#getting-help)
 
 ## Description
 
-Start with a one- or two-sentence summary of what the module does and/or what problem it solves. This is your 30-second elevator pitch for your module. Consider including OS/Puppet version it works with.
+This module provides the pql_query task. This task lets you run pql queries and display the results in the PE Console"
 
-You can give more descriptive information in a second paragraph. This paragraph should answer the questions: "What does this module *do*?" and "Why would I use it?" If your module has a range of functionality (installation, configuration, management, etc.), this is the time to mention it.
+## Requirements
+This module is compatible with Puppet Enterprise and Puppet Bolt.
 
-## Setup
+* To run tasks with Puppet Enterprise, PE 2017.3 or later must be installed on the machine from which you are running task commands. Machines receiving task requests must be Puppet agents.
 
-### What pql_query affects **OPTIONAL**
-
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
-
-If there's more that they should know about, though, this is the place to mention:
-
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
-
-### Beginning with pql_query
-
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+* To run tasks with Puppet Bolt, Bolt 0.5 or later must be installed on the machine from which you are running task commands. Machines receiving task requests must have SSH or WinRM services enabled. If using Bolt, the puppet agent must already installed.
 
 ## Usage
 
-This section is where you describe how to customize, configure, and do the fancy stuff with your module here. It's especially helpful if you include usage examples and code samples for doing things with your module.
+### Usage
 
+You can also run the Puppet Task from the command line using:
+
+```
+puppet task run pql_query::run query=<value> <[--nodes, -n <node-names>] | [--query, -q <'query'>]>
+```
+
+Or using bolt:
+
+```
+bolt task run --nodes, -n <node-name> pql_query::run query=<value>
+```
+**NOTE** The task can take a few minutes to run.
+
+There is 1 parameter:
+* query : pql query you want to execute  
+If something goes wrong, try changing single quotes to double quotes or vice versa.
+
+The results will be shown in YAML in the console.  
+The results are saved in /tmp in json and yaml formats. 
 ## Reference
 
-Users need a complete list of your module's classes, types, defined types providers, facts, and functions, along with the parameters for each. You can provide this list either via Puppet Strings code comments or as a complete list in the README Reference section.
+To view the available actions and parameters, on the command line, run `puppet task show pql_query` or see the pql_query module page on the [Forge](https://forge.puppet.com/beersy/pql_query/tasks).
 
-* If you are using Puppet Strings code comments, this Reference section should include Strings information so that your users know how to access your documentation.
+## Getting Help
 
-* If you are not using Puppet Strings, include a list of all of your classes, defined types, and so on, along with their parameters. Each element in this listing should include:
+To display help for the pql_query task, run `puppet task show pql_query::run`
 
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
+To show help for the task CLI, run `puppet task run --help` or `bolt task run --help`
 
 ## Limitations
+This task can only be targeted to the master node
 
-This is where you list OS compatibility, version compatibility, etc. If there are Known Issues, you might want to include them under their own heading here.
-
-## Development
-
-Since your module is awesome, other users will want to play with it. Let them know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc. **Optional**
-
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+## Release Notes/Contributors/Etc.
+0.1.0 - Initial Release
