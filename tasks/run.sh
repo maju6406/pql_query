@@ -5,5 +5,5 @@ if puppet config print server | grep -v -q `hostname`; then
 fi
 echo "query:" ${query}
 unixtime_string="$(date +%s)"
-puppet query '$PT_query' &>/tmp/query_$unixtime_string
-echo "Query results can be found here: /tmp/query_" ${unixtime_string}
+puppet-query '$PT_query' &>/tmp/query_$unixtime_string
+echo "Query results can be found here: /tmp/query_"${unixtime_string}
