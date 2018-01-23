@@ -7,7 +7,7 @@ echo "query:" ${PT_query}
 echo '---'
 unixtime_string="$(date +%s)"
 filename="pqlquery_$unixtime_string.json"
-/opt/puppetlabs/bin/puppet-query '$PT_query' &>/tmp/$filename
+/opt/puppetlabs/bin/puppet-query "$PT_query" &>/tmp/$filename
 cat /tmp/$filename
 echo
 echo '---'
