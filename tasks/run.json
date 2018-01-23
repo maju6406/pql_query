@@ -1,0 +1,11 @@
+{
+    "puppet_task_version": 1,
+    "supports_noop": false,
+    "description": "Task to run pql query",
+    "parameters": {
+        "query": {
+            "description": "pql query you want to execute.",
+            "type": "String[1]"
+        }
+    }
+}
