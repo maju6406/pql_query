@@ -4,6 +4,9 @@ if puppet config print server | grep -v -q `hostname`; then
   exit 1
 fi
 echo "query:" ${PT_query}
+echo "store_results:" ${PT_store_results}
+echo "jsonlint:" ${PT_jsonlint}
+echo
 echo 'Results (YAML):'
 unixtime_string="$(date +%s)"
 json_filename="pqlquery_$unixtime_string.json"
@@ -19,5 +22,8 @@ else
   echo
   echo "Query results (YAML) can be found here: /tmp/"${yaml_filename}
   echo "Query results (JSON) can be found here: /tmp/"${json_filename}  
+  if [ "$PT_store_results" != "no" ]; then
+    urlencoded_output="$(/opt/puppetlabs/puppet/bin/ruby -e "require 'uri'; puts (URI.escape(STDIN.read))" < /tmp/pqlquery_1516727809.json)"
+    echo http://jsonlint.com/json?=${urlencoded_output}
+  fi
 fi
-

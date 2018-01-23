@@ -10,6 +10,10 @@
         "store_results": {
             "description": "Store results on disk. Defaults to yes.",
             "type": "Optional[Enum[yes, no]]"
+        },
+        "jsonlint": {
+            "description": "Send results to jsonlint.com. Defaults to no. Automatically set to no if store_results is disabled",
+            "type": "Optional[Enum[yes, no]]"
         }
     }
 }
