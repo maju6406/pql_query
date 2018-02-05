@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if puppet config print server | grep -v -q `hostname`; then
+if puppet config print server | grep -v -q `puppet config print certname`; then
   echo "This task can only be run on the master node."; 
   exit 1
 fi
