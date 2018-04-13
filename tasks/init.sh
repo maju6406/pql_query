@@ -8,10 +8,11 @@ if [ "$PT_use_reporter" == "yes" ]; then
   web_root="/opt/puppetlabs/server/apps/nginx/share/html"
   nginx_logs="/opt/puppetlabs/server/apps/nginx/logs"
   nginx_config="/etc/puppetlabs/nginx/conf.d/proxy.conf"
-  
-  if [ "$PT_reporter_port" == "" ];
+
+  if [ "$PT_reporter_port" == "" ]; then
     $PT_reporter_port = "82"
   fi
+
   echo "reporter port:" ${PT_reporter_port}
   if ! grep --quiet "listen $PT_reporter_port" ${nginx_config}; then
     cp ${nginx_config} ${nginx_config}.old
