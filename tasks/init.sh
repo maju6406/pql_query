@@ -9,6 +9,8 @@ if [ "$PT_use_reporter" == "yes" ]; then
   nginx_logs="/opt/puppetlabs/server/apps/nginx/logs"
   nginx_config="/etc/puppetlabs/nginx/conf.d/proxy.conf"
 
+  echo "reporter port:" ${PT_reporter_port}
+
   if [ "$PT_reporter_port" == undef ]; then
     $PT_reporter_port = "82"
   fi
