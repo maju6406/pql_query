@@ -8,18 +8,18 @@ if [ "$PT_use_reporter" == "yes" ]; then
   web_root="/opt/puppetlabs/server/apps/nginx/share/html"
   nginx_logs="/opt/puppetlabs/server/apps/nginx/logs"
   nginx_config="/etc/puppetlabs/nginx/conf.d/proxy.conf"
-
+  reporter_port="82"
   echo "reporter port:" ${PT_reporter_port}
 
-  if [ "$PT_reporter_port" == undef ]; then
-    $PT_reporter_port = "82"
+  if [ "$PT_reporter_port" == "" ]; then
+    $reporter_port=$PT_reporter_port
   fi
 
-  echo "reporter port:" ${PT_reporter_port}
+  echo "reporter port:" ${reporter_port}
   if ! grep --quiet "listen $PT_reporter_port" ${nginx_config}; then
     echo "Adding reporter to nginx"
     cp ${nginx_config} ${nginx_config}.old
-    echo "server { server_name $HOSTNAME; access_log logs/$HOSTNAME.reports.access.log main; listen $PT_reporter_port; root ${web_root};}" >> "${nginx_config}"
+    echo "server { server_name $HOSTNAME; access_log logs/$HOSTNAME.reports.access.log main; listen ${reporter_port}; root ${web_root};}" >> "${nginx_config}"
     mkdir -p ${nginx_logs}
     service pe-nginx restart
   fi
