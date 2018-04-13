@@ -16,7 +16,7 @@ if [ "$PT_use_reporter" == "yes" ]; then
   fi
 
   echo "reporter port:" ${reporter_port}
-  if ! grep --quiet "listen $PT_reporter_port" ${nginx_config}; then
+  if ! grep --quiet "listen ${reporter_port}" ${nginx_config}; then
     echo "Adding reporter to nginx"
     cp ${nginx_config} ${nginx_config}.old
     echo "server { server_name $HOSTNAME; access_log logs/$HOSTNAME.reports.access.log main; listen ${reporter_port}; root ${web_root};}" >> "${nginx_config}"
