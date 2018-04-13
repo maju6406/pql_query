@@ -5,6 +5,10 @@ if puppet config print server | grep -v -q `puppet config print certname`; then
 fi
 
 if [ "$PT_use_reporter" == "yes" ]; then
+  web_root="/opt/puppetlabs/server/apps/nginx/share/html"
+  nginx_logs="/opt/puppetlabs/server/apps/nginx/logs"
+  nginx_config="/etc/puppetlabs/nginx/conf.d/proxy.conf"
+  
   if [ "$PT_reporter_port" == "" ];
     $PT_reporter_port = "82"
   fi
