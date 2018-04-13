@@ -7,6 +7,14 @@
             "description": "pql query you want to execute.",
             "type": "String[1]"
         },
+        "use_reporter": {
+            "description": "Turn on reporter webserver. Defaults to yes.",
+            "type": "Optional[Enum[yes, no]]"
+        },
+        "reporter_port": {
+            "description": "The port the reporter webserver runs on. Default 82",
+            "type": "Optional[String[1]]"
+        },
         "store_results": {
             "description": "Store results on disk. Defaults to yes.",
             "type": "Optional[Enum[yes, no]]"
