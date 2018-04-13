@@ -20,7 +20,7 @@ yaml_loc="${web_root}/${yaml_filename}"
 /opt/puppetlabs/puppet/bin/ruby -ryaml -rjson -e 'puts YAML.dump(JSON.parse(STDIN.read))' < "${json_loc}" > "${yaml_loc}"
 if ! grep --quiet "listen 81" $; then
   cp $nginx_config ${nginx_config}.old
-  echo "server { server_name $HOSTNAME; access_log logs/$HOSTNAME.reports.access.log main; listen 81; root ${web_root};}" >> "${nginx_config}"
+  echo "server { server_name $HOSTNAME; access_log logs/$HOSTNAME.reports.access.log main; listen 82; root ${web_root};}" >> "${nginx_config}"
   mkdir -p ${nginx_logs}
   service pe-nginx restart
 fi
@@ -30,7 +30,7 @@ if [ "$PT_store_results" == "no" ]; then
   rm -rf "${json_loc}" 
 else
   echo
-  echo "Query results (YAML) can be found here: http://$HOSTNAME:81/${yaml_filename}"
-  echo "Query results (JSON) can be found here: http://$HOSTNAME:81/${json_filename}" 
+  echo "Query results (YAML) can be found here: http://$HOSTNAME:82/${yaml_filename}"
+  echo "Query results (JSON) can be found here: http://$HOSTNAME:82/${json_filename}" 
 fi
 
