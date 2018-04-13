@@ -9,13 +9,11 @@ if [ "$PT_use_reporter" == "yes" ]; then
   nginx_logs="/opt/puppetlabs/server/apps/nginx/logs"
   nginx_config="/etc/puppetlabs/nginx/conf.d/proxy.conf"
   reporter_port="82"
-  echo "reporter port:" ${PT_reporter_port}
 
   if [ "$PT_reporter_port" == "" ]; then
     $reporter_port=$PT_reporter_port
   fi
 
-  echo "reporter port:" ${reporter_port}
   if ! grep --quiet "listen ${reporter_port}" ${nginx_config}; then
     echo "Adding reporter to nginx"
     cp ${nginx_config} ${nginx_config}.old
@@ -38,9 +36,17 @@ if [ "$PT_store_results" == "no" ]; then
   rm -rf /tmp/$json_filename
   rm -rf /tmp/$yaml_filename 
 else
-  echo
-  echo "Query results (YAML) can be found here: /tmp/"${yaml_filename}
-  echo "Query results (JSON) can be found here: /tmp/"${json_filename}  
+  if [ "$PT_use_reporter" == "yes" ]; then
+    mv /tmp/$json_filename $web_root
+    mv /tmp/$yaml_filename $web_root  
+    echo
+    echo "Query results (YAML) can be found here: http://$HOSTNAME:${reporter_port}/${yaml_filename}"
+    echo "Query results (JSON) can be found here: http://$HOSTNAME:${reporter_port}/${json_filename}"       
+  else
+    echo
+    echo "Query results (YAML) can be found here: /tmp/${yaml_filename}"
+    echo "Query results (JSON) can be found here: /tmp/${json_filename}"  
+  fi
 fi
 
 
