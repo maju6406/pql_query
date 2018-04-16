@@ -6,6 +6,10 @@ fi
 write_report () {
 file_contents=$(<"$1")
 echo write_report_path $1.html
+file_type="json"
+if [[ $1 = *"yaml"* ]]; then
+  $file_type="yaml"
+fi
 cat << EOF > "$1.html"
 <html>
 
@@ -33,7 +37,9 @@ $file_contents
     <script>
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/javascript");
+        editor.session.setMode("ace/mode/$file_type");
+        editor.setHighlightActiveLine(true); 
+        editor.setShowPrintMargin(true);       
         editor.setReadOnly(true);
     </script>
 </body>
@@ -65,6 +71,8 @@ fi
 echo "query:" ${PT_query}
 echo 'Results (YAML):'
 unixtime_string="$(date +%s)"
+mkdir -p $web_root/$unixtime_string
+report_dir=$web_root/$unixtime_string
 json_filename="pqlquery_$unixtime_string.json"
 yaml_filename="pqlquery_$unixtime_string.yaml"
 /opt/puppetlabs/bin/puppet-query "$PT_query" &>/tmp/$json_filename
@@ -75,13 +83,13 @@ yaml_filename="pqlquery_$unixtime_string.yaml"
 cat /tmp/$yaml_filename
 if [ "$PT_store_results" != "no" ]; then
   if [ "$PT_use_reporter" = "yes" ]; then
-    mv /tmp/$json_filename $web_root
-    mv /tmp/$yaml_filename $web_root
-    write_report $web_root/$json_filename    
-    write_report $web_root/$yaml_filename        
+    mv /tmp/$json_filename $report_dir
+    mv /tmp/$yaml_filename $report_dir
+    write_report $report_dir/$json_filename    
+    write_report $report_dir/$yaml_filename        
     echo
-    echo "Query results (YAML) can be found here: http://$HOSTNAME:${reporter_port}/${yaml_filename}.html"
-    echo "Query results (JSON) can be found here: http://$HOSTNAME:${reporter_port}/${json_filename}.html"       
+    echo "Query results (YAML) can be found here: http://$HOSTNAME:${reporter_port}/$unixtime_string}/${yaml_filename}.html"
+    echo "Query results (JSON) can be found here: http://$HOSTNAME:${reporter_port}/$unixtime_string}/${json_filename}.html"       
   else
     echo
     echo "Query results (YAML) can be found here: /tmp/${yaml_filename}"
