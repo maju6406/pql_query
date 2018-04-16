@@ -5,11 +5,7 @@ if puppet config print server | grep -v -q `puppet config print certname`; then
 fi
 write_report () {
 file_contents=$(<"$1")
-echo write_report_path $1.html
 file_type="json"
-if [[ $1 = *"yaml"* ]]; then
-  $file_type="yaml"
-fi
 cat << EOF > "$1.html"
 <html>
 
@@ -39,6 +35,8 @@ cat << EOF > "$1.html"
         editor.setHighlightActiveLine(true); 
         editor.setShowPrintMargin(true);       
         editor.setReadOnly(true);
+        editor.session.setUseWrapMode(true);  
+        document.getElementById('editor').style.fontSize='24px';              
     </script>
 </body>
 
@@ -81,12 +79,10 @@ yaml_filename="pqlquery_$unixtime_string.yaml"
 cat /tmp/$yaml_filename
 if [ "$PT_store_results" != "no" ]; then
   if [ "$PT_use_reporter" = "yes" ]; then
-    mv /tmp/$json_filename $report_dir
-    mv /tmp/$yaml_filename $report_dir
+    cp /tmp/$json_filename $report_dir
+    cp /tmp/$yaml_filename $report_dir
     write_report $report_dir/$json_filename    
-    write_report $report_dir/$yaml_filename        
     echo
-    echo "Query results (YAML) can be found here: http://$HOSTNAME:${reporter_port}/${unixtime_string}/${yaml_filename}.html"
     echo "Query results (JSON) can be found here: http://$HOSTNAME:${reporter_port}/${unixtime_string}/${json_filename}.html"       
   else
     echo
