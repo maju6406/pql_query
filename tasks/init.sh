@@ -27,9 +27,7 @@ cat << EOF > "$1.html"
 
 <body>
 
-    <div id="editor">
-<pre>
-$file_contents
+    <div id="editor"><pre>$file_contents
 </pre>
     </div>
 
