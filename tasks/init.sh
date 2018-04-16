@@ -3,7 +3,7 @@ if puppet config print server | grep -v -q `puppet config print certname`; then
   echo "This task can only be run on the master node."; 
   exit 1
 fi
-
+echo $PWD
 write_report () {
 
 cat << EOF > ${web_root}/$2.html
@@ -78,9 +78,11 @@ if [ "$PT_store_results" == "no" ]; then
 else
   if [ "$PT_use_reporter" == "yes" ]; then
     mv /tmp/$json_filename $web_root
-    mv /tmp/$yaml_filename $web_root  
-    write_report (`cat $web_root/$json_filename`,json_filename)    
-    write_report (`cat $web_root/$yaml_filename`,yaml_filename)        
+    mv /tmp/$yaml_filename $web_root
+    json_contents=`cat $web_root/$json_filename`
+    yaml_contents=`cat $web_root/$yaml_filename`      
+    write_report (json_contents,json_filename)    
+    write_report (yaml_contents,yaml_filename)        
     echo
     echo "Query results (YAML) can be found here: http://$HOSTNAME:${reporter_port}/${yaml_filename}.html"
     echo "Query results (JSON) can be found here: http://$HOSTNAME:${reporter_port}/${json_filename}.html"       
