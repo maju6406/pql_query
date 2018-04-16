@@ -30,10 +30,10 @@ cat << EOF > "$1.html"
     <script src="http://ajaxorg.github.io/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
     <script>
         var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");
+        editor.setTheme("ace/theme/github");
         editor.session.setMode("ace/mode/$file_type");
         editor.setHighlightActiveLine(true); 
-        editor.setShowPrintMargin(true);       
+        editor.setShowPrintMargin(false);       
         editor.setReadOnly(true);
         editor.session.setUseWrapMode(true);  
         document.getElementById('editor').style.fontSize='24px';              
