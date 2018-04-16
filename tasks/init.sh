@@ -69,17 +69,19 @@ unixtime_string="$(date +%s)"
 json_filename="pqlquery_$unixtime_string.json"
 yaml_filename="pqlquery_$unixtime_string.yaml"
 /opt/puppetlabs/bin/puppet-query "$PT_query" &>/tmp/$json_filename
+# pretty print the json
 /opt/puppetlabs/puppet/bin/ruby -e "require 'json'; puts (JSON.pretty_generate JSON.parse(STDIN.read))" < /tmp/$json_filename > /tmp/$yaml_filename
+# pretty print the yaml
 /opt/puppetlabs/puppet/bin/ruby -ryaml -rjson -e 'puts YAML.dump(JSON.parse(STDIN.read))' < /tmp/$json_filename > /tmp/$yaml_filename
 cat /tmp/$yaml_filename
 if [ "$PT_store_results" != "no" ]; then
   if [ "$PT_use_reporter" = "yes" ]; then
     mv /tmp/$json_filename $web_root
     mv /tmp/$yaml_filename $web_root
-    json_contents=$(<$web_root/$json_filename)
-    yaml_contents=$(<$web_root/$yaml_filename)
-    echo $web_root/$json_filename
-    echo $web_root/$yaml_filename    
+    json_contents=$(<"$web_root/$json_filename")
+    yaml_contents=$(<"$web_root/$yaml_filename")
+    echo paths1 $web_root/$json_filename
+    echo path2 $web_root/$yaml_filename    
     cat $web_root/$json_filename
     cat $web_root/$yaml_filename
     write_report $json_contents $json_filename    
