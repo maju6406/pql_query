@@ -88,8 +88,8 @@ if [ "$PT_store_results" != "no" ]; then
     write_report $report_dir/$json_filename    
     write_report $report_dir/$yaml_filename        
     echo
-    echo "Query results (YAML) can be found here: http://$HOSTNAME:${reporter_port}/$unixtime_string}/${yaml_filename}.html"
-    echo "Query results (JSON) can be found here: http://$HOSTNAME:${reporter_port}/$unixtime_string}/${json_filename}.html"       
+    echo "Query results (YAML) can be found here: http://$HOSTNAME:${reporter_port}/${unixtime_string}/${yaml_filename}.html"
+    echo "Query results (JSON) can be found here: http://$HOSTNAME:${reporter_port}/${unixtime_string}/${json_filename}.html"       
   else
     echo
     echo "Query results (YAML) can be found here: /tmp/${yaml_filename}"
