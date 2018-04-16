@@ -81,8 +81,8 @@ else
     mv /tmp/$yaml_filename $web_root
     json_contents=`cat $web_root/$json_filename`
     yaml_contents=`cat $web_root/$yaml_filename`      
-    write_report (json_contents,json_filename)    
-    write_report (yaml_contents,yaml_filename)        
+    write_report ($json_contents,$json_filename)    
+    write_report ($yaml_contents,$yaml_filename)        
     echo
     echo "Query results (YAML) can be found here: http://$HOSTNAME:${reporter_port}/${yaml_filename}.html"
     echo "Query results (JSON) can be found here: http://$HOSTNAME:${reporter_port}/${json_filename}.html"       
