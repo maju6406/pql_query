@@ -72,8 +72,8 @@ yaml_filename="pqlquery_$unixtime_string.yaml"
 /opt/puppetlabs/puppet/bin/ruby -ryaml -rjson -e 'puts YAML.dump(JSON.parse(STDIN.read))' < /tmp/$json_filename > /tmp/$yaml_filename
 cat /tmp/$yaml_filename
 echo got here 0
-echo $PT_store_results
 if [ $PT_store_results == "no" ]; then
+  echo PT_store_results no
   rm -rf /tmp/$json_filename
   rm -rf /tmp/$yaml_filename 
 else
