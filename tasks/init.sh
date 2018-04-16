@@ -43,13 +43,13 @@ EOF
 }
 
 
-if [ $PT_use_reporter == "yes" ]; then
+if [ "$PT_use_reporter" = "yes" ]; then
   web_root="/opt/puppetlabs/server/apps/nginx/share/html"
   nginx_logs="/opt/puppetlabs/server/apps/nginx/logs"
   nginx_config="/etc/puppetlabs/nginx/conf.d/proxy.conf"
   reporter_port="82"
 
-  if [ $PT_reporter_port == "" ]; then
+  if [ "$PT_reporter_port" = "" ]; then
     $reporter_port=$PT_reporter_port
   fi
 
@@ -73,9 +73,9 @@ yaml_filename="pqlquery_$unixtime_string.yaml"
 cat /tmp/$yaml_filename
 echo got here 0
 echo PT_store_results $PT_store_results
-#if [ $PT_store_results != "no" ]; then
-#  echo got here 1
-  if [ $PT_use_reporter == "yes" ]; then
+if [ "$PT_store_results" != "no" ]; then
+  echo got here 1
+  if [ "$PT_use_reporter" = "yes" ]; then
     echo got here 2  
     mv /tmp/$json_filename $web_root
     mv /tmp/$yaml_filename $web_root
@@ -83,8 +83,8 @@ echo PT_store_results $PT_store_results
     json_contents=`cat $web_root/$json_filename`
     yaml_contents=`cat $web_root/$yaml_filename` 
     echo got here 4     
-    write_report ($json_contents,$json_filename)    
-    write_report ($yaml_contents,$yaml_filename)        
+    write_report($json_contents,$json_filename)    
+    write_report($yaml_contents,$yaml_filename)        
     echo
     echo "Query results (YAML) can be found here: http://$HOSTNAME:${reporter_port}/${yaml_filename}.html"
     echo "Query results (JSON) can be found here: http://$HOSTNAME:${reporter_port}/${json_filename}.html"       
@@ -93,8 +93,8 @@ echo PT_store_results $PT_store_results
     echo "Query results (YAML) can be found here: /tmp/${yaml_filename}"
     echo "Query results (JSON) can be found here: /tmp/${json_filename}"  
   fi  
-#else
-#  echo PT_store_results no
-#  rm -rf /tmp/$json_filename
-#  rm -rf /tmp/$yaml_filename 
-#fi
+else
+  echo PT_store_results no
+  rm -rf /tmp/$json_filename
+  rm -rf /tmp/$yaml_filename 
+fi
