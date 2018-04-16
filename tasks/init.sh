@@ -4,6 +4,45 @@ if puppet config print server | grep -v -q `puppet config print certname`; then
   exit 1
 fi
 
+write_report () {
+
+cat << EOF > ${web_root}/$2.html
+<html>
+
+<head>
+    <style type="text/css" media="screen">
+        #editor {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="editor">
+<pre>
+$1
+</pre>
+    </div>
+
+    <script src="http://ajaxorg.github.io/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/javascript");
+        editor.setReadOnly(true);
+    </script>
+</body>
+
+</html>
+EOF
+}
+
+
 if [ "$PT_use_reporter" == "yes" ]; then
   web_root="/opt/puppetlabs/server/apps/nginx/share/html"
   nginx_logs="/opt/puppetlabs/server/apps/nginx/logs"
@@ -51,43 +90,3 @@ else
     echo "Query results (JSON) can be found here: /tmp/${json_filename}"  
   fi
 fi
-
-
-write_report () {
-
-cat << EOF > ${web_root}/$2.html
-<html>
-
-<head>
-    <style type="text/css" media="screen">
-        #editor {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div id="editor">
-<pre>
-$1
-</pre>
-    </div>
-
-    <script src="http://ajaxorg.github.io/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-        var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/javascript");
-        editor.setReadOnly(true);
-    </script>
-</body>
-
-</html>
-EOF
-}
-
