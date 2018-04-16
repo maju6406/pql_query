@@ -4,10 +4,9 @@ if puppet config print server | grep -v -q `puppet config print certname`; then
   exit 1
 fi
 write_report () {
-echo var1 $1
-echo var2 $2
-echo ${web_root}/$2.html
-cat << EOF > ${web_root}/$2.html
+file_contents=$(<"$1")
+echo write_report_path $1.html
+cat << EOF > "$1.html"
 <html>
 
 <head>
@@ -26,7 +25,7 @@ cat << EOF > ${web_root}/$2.html
 
     <div id="editor">
 <pre>
-$1
+$file_contents
 </pre>
     </div>
 
@@ -78,14 +77,8 @@ if [ "$PT_store_results" != "no" ]; then
   if [ "$PT_use_reporter" = "yes" ]; then
     mv /tmp/$json_filename $web_root
     mv /tmp/$yaml_filename $web_root
-    json_contents=$(<"$web_root/$json_filename")
-    yaml_contents=$(<"$web_root/$yaml_filename")
-    echo paths1 $web_root/$json_filename
-    echo path2 $web_root/$yaml_filename    
-    cat $web_root/$json_filename
-    cat $web_root/$yaml_filename
-    write_report $json_contents $json_filename    
-    write_report $yaml_contents $yaml_filename        
+    write_report $web_root/$json_filename    
+    write_report $web_root/$yaml_filename        
     echo
     echo "Query results (YAML) can be found here: http://$HOSTNAME:${reporter_port}/${yaml_filename}.html"
     echo "Query results (JSON) can be found here: http://$HOSTNAME:${reporter_port}/${json_filename}.html"       
