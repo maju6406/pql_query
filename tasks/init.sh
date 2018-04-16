@@ -3,9 +3,10 @@ if puppet config print server | grep -v -q `puppet config print certname`; then
   echo "This task can only be run on the master node."; 
   exit 1
 fi
-echo $PWD
 write_report () {
-echo "got here"
+echo var1 $1
+echo var2 $2
+echo ${web_root}/$2.html
 cat << EOF > ${web_root}/$2.html
 <html>
 
@@ -71,18 +72,14 @@ yaml_filename="pqlquery_$unixtime_string.yaml"
 /opt/puppetlabs/puppet/bin/ruby -e "require 'json'; puts (JSON.pretty_generate JSON.parse(STDIN.read))" < /tmp/$json_filename > /tmp/$yaml_filename
 /opt/puppetlabs/puppet/bin/ruby -ryaml -rjson -e 'puts YAML.dump(JSON.parse(STDIN.read))' < /tmp/$json_filename > /tmp/$yaml_filename
 cat /tmp/$yaml_filename
-echo got here 0
-echo PT_store_results $PT_store_results
 if [ "$PT_store_results" != "no" ]; then
-  echo got here 1
   if [ "$PT_use_reporter" = "yes" ]; then
-    echo got here 2  
     mv /tmp/$json_filename $web_root
     mv /tmp/$yaml_filename $web_root
-    echo got here 3      
     json_contents=`cat $web_root/$json_filename`
     yaml_contents=`cat $web_root/$yaml_filename` 
-    echo got here 4     
+    cat $json_contents
+    cat $yaml_contents
     write_report $json_contents $json_filename    
     write_report $yaml_contents $yaml_filename        
     echo
@@ -94,7 +91,6 @@ if [ "$PT_store_results" != "no" ]; then
     echo "Query results (JSON) can be found here: /tmp/${json_filename}"  
   fi  
 else
-  echo PT_store_results no
   rm -rf /tmp/$json_filename
   rm -rf /tmp/$yaml_filename 
 fi
