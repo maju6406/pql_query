@@ -5,7 +5,7 @@ if puppet config print server | grep -v -q `puppet config print certname`; then
 fi
 echo $PWD
 write_report () {
-
+echo "got here"
 cat << EOF > ${web_root}/$2.html
 <html>
 
@@ -80,7 +80,8 @@ else
     mv /tmp/$json_filename $web_root
     mv /tmp/$yaml_filename $web_root
     json_contents=`cat $web_root/$json_filename`
-    yaml_contents=`cat $web_root/$yaml_filename`      
+    yaml_contents=`cat $web_root/$yaml_filename` 
+    echo got here 1     
     write_report ($json_contents,$json_filename)    
     write_report ($yaml_contents,$yaml_filename)        
     echo
