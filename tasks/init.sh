@@ -64,8 +64,6 @@ if [ "$PT_use_reporter" = "yes" ]; then
   fi
 fi
 
-echo "query:" ${PT_query}
-echo 'Results (YAML):'
 unixtime_string="$(date +%s)"
 mkdir -p $web_root/$unixtime_string
 report_dir=$web_root/$unixtime_string
@@ -76,7 +74,6 @@ yaml_filename="pqlquery_$unixtime_string.yaml"
 /opt/puppetlabs/puppet/bin/ruby -e "require 'json'; puts (JSON.pretty_generate JSON.parse(STDIN.read))" < /tmp/$json_filename > /tmp/$yaml_filename
 # pretty print the yaml
 /opt/puppetlabs/puppet/bin/ruby -ryaml -rjson -e 'puts YAML.dump(JSON.parse(STDIN.read))' < /tmp/$json_filename > /tmp/$yaml_filename
-cat /tmp/$yaml_filename
 if [ "$PT_store_results" != "no" ]; then
   if [ "$PT_use_reporter" = "yes" ]; then
     cp /tmp/$json_filename $report_dir
@@ -84,12 +81,20 @@ if [ "$PT_store_results" != "no" ]; then
     write_report $report_dir/$json_filename    
     echo
     echo "Query results (JSON) can be found here: http://$HOSTNAME:${reporter_port}/${unixtime_string}/${json_filename}.html"       
-  else
     echo
+    echo 'Results (YAML):'
+    cat /tmp/$yaml_filename
+  else
     echo "Query results (YAML) can be found here: /tmp/${yaml_filename}"
     echo "Query results (JSON) can be found here: /tmp/${json_filename}"  
+    echo 'Results (YAML):'    
+    echo
+    cat /tmp/$yaml_filename    
   fi  
 else
+  echo 'Results (YAML):'    
+  echo
+  cat /tmp/$yaml_filename
   rm -rf /tmp/$json_filename
   rm -rf /tmp/$yaml_filename 
 fi
