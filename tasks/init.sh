@@ -49,7 +49,7 @@ if [ "$PT_use_reporter" = "yes" ]; then
   nginx_config="/etc/puppetlabs/nginx/conf.d/proxy.conf"
   reporter_port="82"
 
-  if [ "$PT_reporter_port" = "" ]; then
+  if [ -z "$PT_reporter_port"]; then
     $reporter_port=$PT_reporter_port
   fi
 
@@ -83,8 +83,8 @@ if [ "$PT_store_results" != "no" ]; then
     json_contents=`cat $web_root/$json_filename`
     yaml_contents=`cat $web_root/$yaml_filename` 
     echo got here 4     
-    write_report($json_contents,$json_filename)    
-    write_report($yaml_contents,$yaml_filename)        
+    write_report $json_contents $json_filename    
+    write_report $yaml_contents $yaml_filename        
     echo
     echo "Query results (YAML) can be found here: http://$HOSTNAME:${reporter_port}/${yaml_filename}.html"
     echo "Query results (JSON) can be found here: http://$HOSTNAME:${reporter_port}/${json_filename}.html"       
