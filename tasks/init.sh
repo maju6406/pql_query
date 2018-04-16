@@ -79,6 +79,7 @@ else
   if [ "$PT_use_reporter" == "yes" ]; then
     mv /tmp/$json_filename $web_root
     mv /tmp/$yaml_filename $web_root
+    echo got here 0       
     json_contents=`cat $web_root/$json_filename`
     yaml_contents=`cat $web_root/$yaml_filename` 
     echo got here 1     
