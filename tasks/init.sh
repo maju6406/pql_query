@@ -78,8 +78,10 @@ if [ "$PT_store_results" != "no" ]; then
     mv /tmp/$yaml_filename $web_root
     json_contents=`cat $web_root/$json_filename`
     yaml_contents=`cat $web_root/$yaml_filename` 
-    cat $json_contents
-    cat $yaml_contents
+    echo $web_root/$json_filename
+    echo $web_root/$yaml_filename    
+    cat $web_root/$json_filename
+    cat $web_root/$yaml_filename
     write_report $json_contents $json_filename    
     write_report $yaml_contents $yaml_filename        
     echo
