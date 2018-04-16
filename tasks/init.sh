@@ -73,14 +73,10 @@ yaml_filename="pqlquery_$unixtime_string.yaml"
 cat /tmp/$yaml_filename
 echo got here 0
 echo PT_store_results $PT_store_results
-if [ $PT_store_results == "no" ]; then
-  echo PT_store_results no
-  rm -rf /tmp/$json_filename
-  rm -rf /tmp/$yaml_filename 
-else
+if [ $PT_store_results != "no" ]; then
   echo got here 1
   if [ $PT_use_reporter == "yes" ]; then
-  echo got here 2  
+    echo got here 2  
     mv /tmp/$json_filename $web_root
     mv /tmp/$yaml_filename $web_root
     echo got here 3      
@@ -96,5 +92,9 @@ else
     echo
     echo "Query results (YAML) can be found here: /tmp/${yaml_filename}"
     echo "Query results (JSON) can be found here: /tmp/${json_filename}"  
-  fi
+  fi  
+else
+  echo PT_store_results no
+  rm -rf /tmp/$json_filename
+  rm -rf /tmp/$yaml_filename 
 fi
