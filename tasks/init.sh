@@ -32,6 +32,7 @@ yaml_filename="pqlquery_$unixtime_string.yaml"
 /opt/puppetlabs/puppet/bin/ruby -e "require 'json'; puts (JSON.pretty_generate JSON.parse(STDIN.read))" < /tmp/$json_filename > /tmp/$yaml_filename
 /opt/puppetlabs/puppet/bin/ruby -ryaml -rjson -e 'puts YAML.dump(JSON.parse(STDIN.read))' < /tmp/$json_filename > /tmp/$yaml_filename
 cat /tmp/$yaml_filename
+
 if [ "$PT_store_results" == "no" ]; then
   rm -rf /tmp/$json_filename
   rm -rf /tmp/$yaml_filename 
@@ -39,9 +40,11 @@ else
   if [ "$PT_use_reporter" == "yes" ]; then
     mv /tmp/$json_filename $web_root
     mv /tmp/$yaml_filename $web_root  
+    write_report (`cat $web_root/$json_filename`,json_filename)    
+    write_report (`cat $web_root/$yaml_filename`,yaml_filename)        
     echo
-    echo "Query results (YAML) can be found here: http://$HOSTNAME:${reporter_port}/${yaml_filename}"
-    echo "Query results (JSON) can be found here: http://$HOSTNAME:${reporter_port}/${json_filename}"       
+    echo "Query results (YAML) can be found here: http://$HOSTNAME:${reporter_port}/${yaml_filename}.html"
+    echo "Query results (JSON) can be found here: http://$HOSTNAME:${reporter_port}/${json_filename}.html"       
   else
     echo
     echo "Query results (YAML) can be found here: /tmp/${yaml_filename}"
@@ -49,4 +52,42 @@ else
   fi
 fi
 
+
+write_report () {
+
+cat << EOF > ${web_root}/$2.html
+<html>
+
+<head>
+    <style type="text/css" media="screen">
+        #editor {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="editor">
+<pre>
+$1
+</pre>
+    </div>
+
+    <script src="http://ajaxorg.github.io/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/javascript");
+        editor.setReadOnly(true);
+    </script>
+</body>
+
+</html>
+EOF
+}
 
