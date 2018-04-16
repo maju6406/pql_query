@@ -76,8 +76,8 @@ if [ "$PT_store_results" != "no" ]; then
   if [ "$PT_use_reporter" = "yes" ]; then
     mv /tmp/$json_filename $web_root
     mv /tmp/$yaml_filename $web_root
-    json_contents=`cat $web_root/$json_filename`
-    yaml_contents=`cat $web_root/$yaml_filename` 
+    json_contents=$(<$web_root/$json_filename)
+    yaml_contents=$(<$web_root/$yaml_filename)
     echo $web_root/$json_filename
     echo $web_root/$yaml_filename    
     cat $web_root/$json_filename
