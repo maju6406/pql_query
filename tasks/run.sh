@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-if puppet config print server | grep -v -q `puppet config print certname`; then
-  echo "This task can only be run on the master node."; 
-  exit 1
-fi
+#if puppet config print server | grep -v -q `puppet config print certname`; then
+#  echo "This task can only be run on the master node."; 
+#  exit 1
+#fi
 echo "query:" ${PT_query}
 echo 'Results (YAML):'
 unixtime_string="$(date +%s)"
