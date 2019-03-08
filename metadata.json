@@ -1,6 +1,6 @@
 {
   "name": "beersy-pql_query",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Abir Majumdar",
   "summary": "Task that lets you run pql queries in the PE Console",
   "license": "Apache-2.0",
