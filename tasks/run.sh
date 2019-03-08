@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
-#if puppet config print server | grep -v -q `puppet config print certname`; then
-#  echo "This task can only be run on the master node."; 
-#  exit 1
-#fi
 echo "query:" ${PT_query}
-if [[ $PT_query == *"puppet query"* ]];
+if [[ $PT_query == *"puppet query"* ]]; then
   echo "You don't need 'puppet query' in front of the query. Just add the query itself. Example: resources[file]{type = 'File'}"
   exit 1
 fi
