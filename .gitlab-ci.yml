@@ -1,7 +1,6 @@
 ---
 stages:
   - test_2.4.1
-  - test_2.1.9
 
 before_script:
   - bundle -v
@@ -39,32 +38,3 @@ rspec-puppet-2.4.1:
   script:
     - bundle update
     - bundle exec rake $CHECK
-
-rubocop-2.1.9:
-  stage: test_2.1.9
-  image: ruby:2.1.9
-  script:
-    - bundle exec rake rubocop
-
-syntax-2.1.9:
-  stage: test_2.1.9
-  image: ruby:2.1.9
-  script:
-    - bundle exec rake syntax lint
-
-metadata-2.1.9:
-  stage: test_2.1.9
-  image: ruby:2.1.9
-  script:
-    - bundle exec rake metadata_lint
-
-rspec-puppet-2.1.9:
-  stage: test_2.1.9
-  image: ruby:2.1.9
-  variables:
-    PUPPET_GEM_VERSION: ~> 4.0
-    CHECK: spec
-  script:
-    - bundle update
-    - bundle exec rake $CHECK
-
