@@ -1,42 +1,39 @@
----
 dist: trusty
 language: ruby
 cache: bundler
 before_install:
-  - bundle -v
-  - rm -f Gemfile.lock
-  - gem update --system $RUBYGEMS_VERSION
-  - gem --version
-  - bundle -v
+- bundle -v
+- rm -f Gemfile.lock
+- gem update --system $RUBYGEMS_VERSION
+- gem --version
+- bundle -v
 script:
-  - 'bundle exec rake $CHECK'
-bundler_args: --without system_tests
+- bundle exec rake $CHECK
+bundler_args: "--without system_tests"
 rvm:
-  - 2.5.1
+- 2.5.1
 env:
   global:
-    - BEAKER_PUPPET_COLLECTION=puppet6 PUPPET_GEM_VERSION="~> 6.0"
+  - BEAKER_PUPPET_COLLECTION=puppet6 PUPPET_GEM_VERSION="~> 6.0"
 matrix:
   fast_finish: true
   include:
-    -
-      env: CHECK="syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop"
-    -
-      env: CHECK=parallel_spec
-    -
-      env: PUPPET_GEM_VERSION="~> 5.0" CHECK=parallel_spec
-      rvm: 2.4.4
+  - env: CHECK="syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore
+      check:test_file rubocop"
+  - env: CHECK=parallel_spec
+  - env: PUPPET_GEM_VERSION="~> 5.0" CHECK=parallel_spec
+    rvm: 2.4.4
 branches:
   only:
-    - master
-    - /^v\d/
+  - master
+  - "/^v\\d/"
 notifications:
   email: false
 deploy:
   provider: puppetforge
-  user: puppet
+  user: beersy
   password:
-    secure: ""
+    secure: "H0VYa31L7kCcKpw4c0W6X98XlFUwWobue2kSGnfditdJkf3vBTXtd/JogXZ+KPPqS066tWHAt07sj7E+54cwl+t32QTY5rMb/cpUR6e19h+aVyh5DK6LXELhg7ymvhWcOH89hV6MXJdEgOfQAzk45jMlHu6WN/8eDPGdylc2KxvVHRDP7uEkKIx7DO03/xVE1dM8jatuZiuAX5A/0dNatOrj8E5y7d08a7Y4Wr/vHG271KvKg4AIWvXRCicHjMNrMsk7qvvtR22AjzAGqbnMElxFgc6RAlMNJoilTrl9aB+BP19g6MEGbJao7vRcnjr7DGVEdQa62AW8pObvyCZdm3cw+iRNttGRP4wcmR9reRJ5MUFWoiAdYCwD+vUqFdDYezBSb3EHbDTDP1cU5dIZ/FPdHjMdscDKVVq5kXZ30wmBzg35cxWDSRFZ9D+jdPoApAQ4WMIZ9q4kPi8S88iDynhUhTR52A6Z2NbC51A+2H/kgtw1ccKZVhzDMpSlrD01JlmgMeUTE8OYnLXxqqAcam6t0PK+95/6T+fadqXygmjvJ2c2S5DDCrbIPmwNPNrcGTByGlNeF3etH0bV+x86q+poyXle4YmDhxA6mxzqSVfpMD5tElbvlaNF43BohoijMIx6uA6Qp7KzzvuZMyZFQJFp7H22OBgQHl62wbfLb9o="
   on:
     tags: true
     all_branches: true
